@@ -21,8 +21,8 @@ import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
-    // MongooseModule.forRoot('mongodb://localhost/nova_poshta'),
-    MongooseModule.forRoot('mongodb+srv://ea_admin:123456_ea_admin@cluster0.kkd7c.mongodb.net/'),
+     MongooseModule.forRoot('mongodb://localhost/nova_poshta_prod'),
+   // MongooseModule.forRoot('mongodb+srv://ea_admin:123456_ea_admin@cluster0.kkd7c.mongodb.net/'),
     UserModule,
     PpoModule,
     AuthModule,

@@ -21,7 +21,7 @@ export class MailerController {
   async sendMembershipRequest(@Body() dto: MembershipRequestDto) {
     const {  phone, region } = dto;
 
-    const subject = 'Нова заявка на вступ до профсоюза';
+    const subject ='З сайту отримано нову заявку на вступ';
     const text = `Имя: ${region}\nТелефон: ${phone}`;
     const html = `
       <p>Регіон: ${region}</p>

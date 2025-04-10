@@ -59,7 +59,7 @@ export class SubscriptionService {
         return subscription.save();
     }
     private async sendConfirmationEmail(email: string) {
-        const confirmationLink = `https://kiwicode.tech/subscription/confirm?email=${email}`;
+        const confirmationLink = `https://kiwicode.digital/subscription/confirm?email=${email}`;
         console.log(email);
         await this.mailerService.sendMail(
             email,
