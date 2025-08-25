@@ -10,11 +10,11 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
-import { CreatePpoDto } from './dto/create-ppo.dto';
-import { storage } from './multer.config';
-import { PpoService } from './ppo.service';
 import { diskStorage } from 'multer';
-import { extname } from 'path';
+import * as path from 'path';
+import { CreatePpoDto } from './dto/create-ppo.dto';
+import { UpdatePpoDto } from './dto/update-ppo.dto';
+import { PpoService } from './ppo.service';
 
 @Controller('ppo')
 export class PpoController {
@@ -42,37 +42,54 @@ export class PpoController {
     return this.ppoService.findOneByLink(link);
   }
 
-  // @Put(':id')
-  // async update(@Param('id') id: string, @Body() updatePpoDto: UpdatePpoDto) {
-  //   return this.ppoService.update(id, updatePpoDto);
-  // }
-
-  @Put(':id')
+  @Put(':id/:link')
   @UseInterceptors(
     FileFieldsInterceptor(
       [
-        { name: 'image', maxCount: 1 },
         { name: 'avatar', maxCount: 1 },
+        { name: 'image', maxCount: 1 },
       ],
       {
         storage: diskStorage({
-          destination: './ppo_images',
+          destination: './images/ppo',
           filename: (req, file, callback) => {
-            // Отримуємо назву регіону з тіла запиту
-            const regionName = req.body.place || 'unknown';
-            // Назву файлу беремо з `originalname`
-            const originalname = file.originalname;
-            // Ви можете додати й інші поля для унікальності
-            const uniqueSuffix =
-              Date.now() + '-' + Math.round(Math.random() * 1e9);
-            const extension = extname(originalname);
+            const { link } = req.params;
+            const extension = path.parse(file.originalname).ext;
 
-            callback(null, `${regionName}-${uniqueSuffix}${extension}`);
+            if (file.fieldname === 'avatar') {
+              callback(null, `${link}-avatar${extension}`);
+            } else if (file.fieldname === 'image') {
+              callback(null, `${link}${extension}`);
+            } else {
+              callback(null, file.originalname);
+            }
           },
         }),
       },
     ),
   )
+  update(
+    @Param('id') id: string,
+    @UploadedFiles()
+    files: { avatar?: Express.Multer.File[]; image?: Express.Multer.File[] },
+    @Body() updatePpoDto: UpdatePpoDto,
+  ) {
+    const avatarFile = files.avatar ? files.avatar[0] : null;
+    const imageFile = files.image ? files.image[0] : null;
+
+    const updateData: Record<string, any> = { ...updatePpoDto };
+
+    if (avatarFile) {
+      updateData.avatar = `/images/ppo/${avatarFile.filename}`;
+    }
+
+    if (imageFile) {
+      updateData.image = `/images/ppo/${imageFile.filename}`;
+    }
+
+    return this.ppoService.update(id, updateData);
+  }
+
   @Delete(':id')
   async remove(@Param('id') id: string) {
     return this.ppoService.remove(id);

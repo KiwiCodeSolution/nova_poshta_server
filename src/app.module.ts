@@ -21,10 +21,8 @@ import { UserModule } from './users/users.module';
 
 @Module({
   imports: [
-    // MongooseModule.forRoot('mongodb://localhost/nova_poshta_prod'),
-    MongooseModule.forRoot(
-      'mongodb+srv://ea_admin:123456_ea_admin@cluster0.kkd7c.mongodb.net/',
-    ),
+    MongooseModule.forRoot('mongodb://localhost/nova_poshta_prod'),
+
     UserModule,
     PpoModule,
     AuthModule,
@@ -53,8 +51,8 @@ import { UserModule } from './users/users.module';
       serveRoot: '/public',
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'ppo_images'),
-      serveRoot: '/ppo_images',
+      rootPath: join(__dirname, '..', 'images', 'ppo'),
+      serveRoot: '/images/ppo',
     }),
   ],
   controllers: [MailerController, FilesController, PpoController],

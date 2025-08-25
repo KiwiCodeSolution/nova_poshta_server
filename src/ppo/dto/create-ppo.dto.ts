@@ -1,4 +1,4 @@
-import { IsEmail, IsNumber, IsString } from 'class-validator';
+import { IsBoolean, IsEmail, IsNumber, IsString } from 'class-validator';
 
 export class CreatePpoDto {
   @IsString()
@@ -41,4 +41,7 @@ export class CreatePpoDto {
 
   @IsString()
   readonly link: string;
+
+  @IsBoolean()
+  readonly is_active: boolean;
 }

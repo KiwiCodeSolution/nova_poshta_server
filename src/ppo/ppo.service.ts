@@ -65,11 +65,11 @@ export class PpoService {
 
     // 2. Додаємо шляхи до файлів, якщо вони присутні.
     if (imageFile) {
-      updateData.image = `/ppo_images/${imageFile.filename}`;
+      updateData.image = `/images/ppo/${imageFile.filename}`;
     }
 
     if (avatarFile) {
-      updateData.avatar = `/ppo_images/${avatarFile.filename}`;
+      updateData.avatar = `/images/ppo/${avatarFile.filename}`;
     }
 
     // 3. Виконуємо оновлення.

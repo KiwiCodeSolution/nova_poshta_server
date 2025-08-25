@@ -1,7 +1,8 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { Type } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import {
   IsArray,
+  IsBoolean,
   IsEmail,
   IsNumber,
   IsOptional,
@@ -60,4 +61,9 @@ export class UpdatePpoDto extends PartialType(CreatePpoDto) {
   @IsNumber()
   @Type(() => Number)
   quantity?: number;
+
+  @IsOptional()
+  @IsBoolean()
+  @Transform(({ value }) => value === 'true' || value === true)
+  is_active?: boolean;
 }

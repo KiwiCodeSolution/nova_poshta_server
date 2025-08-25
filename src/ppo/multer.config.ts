@@ -2,7 +2,7 @@ import { diskStorage } from 'multer';
 import { extname } from 'path';
 
 export const storage = diskStorage({
-  destination: './ppo_images', // папка для всіх ППО файлів
+  destination: './images/ppo', // папка для всіх ППО файлів
   filename: (req, file, cb) => {
     // беремо slug з body або з link
     // якщо в body немає link, fallback - 'default'

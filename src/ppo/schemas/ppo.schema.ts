@@ -44,6 +44,9 @@ export class Ppo extends Document {
 
   @Prop()
   link: string;
+
+  @Prop({ default: true })
+  is_active: boolean;
 }
 
 export const PpoSchema = SchemaFactory.createForClass(Ppo);
