@@ -20,9 +20,8 @@ import { MailModule } from 'src/mailer/mailer.module';
     GallereyModule,
     SubscriptionsModule,
     MailModule,
-    
   ],
   controllers: [NewsController],
   providers: [NewsService, LoggerService, ImageService, ConfigService],
 })
-export class NewsModule { }
+export class NewsModule {}

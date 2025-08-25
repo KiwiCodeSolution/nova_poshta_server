@@ -1,7 +1,7 @@
-POST http://localhost:5000/api/auth/login HTTP/1.1
+POST http://localhost:5000/bc/auth/login HTTP/1.1
 Content-Type: application/json
 
 {
-   "username": "qb22be",
+   "username": "poduzova",
    "password": "123456"
 }

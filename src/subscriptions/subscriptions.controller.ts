@@ -1,4 +1,13 @@
-import { Controller, Post, Body, Get, Query, HttpCode, HttpStatus, Put } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  Query,
+  HttpCode,
+  HttpStatus,
+  Put,
+} from '@nestjs/common';
 import { SubscriptionService } from './subscriptions.service';
 import { CreateSubscriptionDto } from './dto/create_subscription.dto';
 import { LogSubscriptionDto } from './dto/log_subscription.dto';
@@ -6,7 +15,7 @@ import { UpdateSubscriptDto } from './dto/update_subscript.dto';
 
 @Controller('subscription')
 export class SubscriptionController {
-  constructor(private subscriptionService: SubscriptionService) { }
+  constructor(private subscriptionService: SubscriptionService) {}
 
   @Post()
   async create(@Body() createSubscriptionDto: CreateSubscriptionDto) {
@@ -17,7 +26,7 @@ export class SubscriptionController {
   async update(@Body() updateSubscriptionDto: UpdateSubscriptDto) {
     return this.subscriptionService.updateSubscription(updateSubscriptionDto);
   }
-  
+
   @Post('confirm')
   async confirm(@Body() body: { email: string }) {
     const { email } = body;
@@ -31,5 +40,4 @@ export class SubscriptionController {
     await this.subscriptionService.logSubscriptionToFile(name, email);
     return { message: 'Подписка успешно залогирована' };
   }
-
 }

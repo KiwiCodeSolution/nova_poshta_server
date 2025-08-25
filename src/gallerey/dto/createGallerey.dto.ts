@@ -1,5 +1,13 @@
 import { Type } from 'class-transformer';
-import { IsArray, IsDate, IsDateString, IsEnum, IsOptional, IsString, ValidateNested } from 'class-validator';
+import {
+  IsArray,
+  IsDate,
+  IsDateString,
+  IsEnum,
+  IsOptional,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
 
 class ImageDto {
   @IsString()
@@ -27,14 +35,14 @@ export class CreateGallereyDto {
 
   @IsString()
   content: string;
-  
+
   @IsOptional()
   @IsString()
   previewText: string;
-  
+
   @IsOptional()
   @IsString()
-  previewImage: string
+  previewImage: string;
 
   @IsOptional()
   @IsEnum(['published', 'created', 'archived'])
@@ -43,7 +51,7 @@ export class CreateGallereyDto {
   @IsOptional()
   @IsString()
   readonly publishDate?: Date;
-  
+
   @IsOptional()
   @IsDateString()
   readonly datetime?: Date;

@@ -12,9 +12,8 @@ import { CreateGallereyDto } from './dto/createGallerey.dto';
 import { UpdateGallereyDto } from './dto/updateGallerey.dto';
 
 @Controller('gallerey')
-
 export class GallereyController {
-  constructor(private readonly gallereyService: GallereyService) { }
+  constructor(private readonly gallereyService: GallereyService) {}
 
   // @Post('upload-preview')
   // async uploadPreviewImage(@Body() body: { previewImage: string, title: string }) {
@@ -25,7 +24,6 @@ export class GallereyController {
   async findById(@Param('id') id: string) {
     return this.gallereyService.findById(id);
   }
-
 
   @Post()
   create(@Body() createGallereyDto: CreateGallereyDto) {
@@ -43,9 +41,11 @@ export class GallereyController {
     return this.gallereyService.findBySlug(slug);
   }
 
-
   @Put(':slug')
-  update(@Param('slug') slug: string, @Body() updateGallereyDto: UpdateGallereyDto) {
+  update(
+    @Param('slug') slug: string,
+    @Body() updateGallereyDto: UpdateGallereyDto,
+  ) {
     return this.gallereyService.update(slug, updateGallereyDto);
   }
 
@@ -53,6 +53,4 @@ export class GallereyController {
   delete(@Param('slug') slug: string, @Param('userId') userId: string) {
     return this.gallereyService.delete(slug, userId);
   }
-
-
 }

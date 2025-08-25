@@ -3,7 +3,7 @@ import { IsOptional, IsString, IsEmail } from 'class-validator';
 export class ContactDto {
   @IsOptional()
   @IsEmail()
- mail?: string;
+  mail?: string;
 
   @IsOptional()
   @IsString()
@@ -30,10 +30,5 @@ export class ContactDto {
   facebook?: string;
 }
 
-
-export class CreateContactDto extends ContactDto {
-
-}
-export class UpdateContactDto extends ContactDto {
-
-}
+export class CreateContactDto extends ContactDto {}
+export class UpdateContactDto extends ContactDto {}

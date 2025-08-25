@@ -9,11 +9,13 @@ import { MailModule } from 'src/mailer/mailer.module';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: 'Subscription', schema: SubscriptionSchema }]),
+    MongooseModule.forFeature([
+      { name: 'Subscription', schema: SubscriptionSchema },
+    ]),
     MailModule,
   ],
   controllers: [SubscriptionController],
-  providers: [SubscriptionService , LoggerService],
+  providers: [SubscriptionService, LoggerService],
   exports: [MongooseModule],
 })
 export class SubscriptionsModule {}

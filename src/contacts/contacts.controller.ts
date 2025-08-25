@@ -4,7 +4,7 @@ import { CreateContactDto, UpdateContactDto } from './dto/createContact.dto';
 
 @Controller('contacts')
 export class ContactsController {
-  constructor(private readonly contactsService: ContactsService) { }
+  constructor(private readonly contactsService: ContactsService) {}
 
   @Post()
   async create(@Body() createContactDto: CreateContactDto) {
@@ -12,10 +12,7 @@ export class ContactsController {
   }
 
   @Put()
-  async update(
-
-    @Body() updateContactDto: UpdateContactDto,
-  ) {
+  async update(@Body() updateContactDto: UpdateContactDto) {
     return this.contactsService.updateSingleContact(updateContactDto);
   }
   @Get()

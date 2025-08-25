@@ -16,7 +16,6 @@ export class UpdateNewsDto {
   @IsOptional()
   @IsString()
   previewText: string;
-  
 
   @IsOptional()
   @IsArray()
@@ -34,14 +33,16 @@ export class UpdateNewsDto {
 
   @IsOptional()
   publishDate?: Date;
-  
+
   @IsOptional()
   @IsString()
   author: string;
-  
+
   @IsOptional()
-  readonly images:[ {
-    filename: String,
-    url: String,
-  }];
+  readonly images: [
+    {
+      filename: String;
+      url: String;
+    },
+  ];
 }

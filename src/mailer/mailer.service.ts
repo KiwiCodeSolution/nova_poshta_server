@@ -7,7 +7,7 @@ export class MailerService {
   constructor(
     private readonly mailerService: NestMailerService,
     private readonly userService: UsersService,
-  ) { }
+  ) {}
 
   async sendMail(
     to: string,

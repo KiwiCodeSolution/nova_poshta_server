@@ -18,7 +18,10 @@ export class FilesService {
       }
     }
 
-    return { message: 'Файл успішно завантажено або оновлено', fileName: file.originalname };
+    return {
+      message: 'Файл успішно завантажено або оновлено',
+      fileName: file.originalname,
+    };
   }
 
   deleteFile(filename: string) {

@@ -131,7 +131,11 @@
     "avatar": "/images/ppo/ivano-frankivsk-ppo-avatar.jpg",
     "admission_address": "м. Івано-Франківськ; Дробко Володимир, відділення НП № 9; ном.тел. одержувача: +380675530742; за шаблоном внутрішніх відправок",
     "application_address": "",
-    "committee": ["Володимир Дробко (голова ППО)", "Юлія Петренкіна", "Мар'яна Савко"],
+    "committee": [
+      "Володимир Дробко (голова ППО)",
+      "Юлія Петренкіна",
+      "Мар'яна Савко"
+    ],
     "link_news": "https://www.facebook.com/groups/Frankivsk.profspilkaNP/",
     "link": "/ppo/ivano-frankivsk-ppo"
   },
@@ -373,7 +377,12 @@
     "avatar": "",
     "admission_address": "",
     "application_address": "",
-    "committee": ["Дмитро Косяк", "Антон Попов", "Ірина Данькова", "Євген Пивко"],
+    "committee": [
+      "Дмитро Косяк",
+      "Антон Попов",
+      "Ірина Данькова",
+      "Євген Пивко"
+    ],
     "link_news": "https://www.facebook.com/groups/kharkivskaprofspilka.np/",
     "link": "/ppo/kharkivska-ppo"
   },
@@ -389,7 +398,10 @@
     "avatar": "/images/ppo/kherson-ppo-avatar.jpg",
     "admission_address": "м. Луцьк; Краснобай Денис Миколайович, відділення НП № 1; ном.тел. одержувача: +380675455023; за шаблоном внутрішніх відправок",
     "application_address": "",
-    "committee": ["Тетяна Найдьонова (голова ППО)", "Ірина Сікальчук (заступниця голови ППО)"],
+    "committee": [
+      "Тетяна Найдьонова (голова ППО)",
+      "Ірина Сікальчук (заступниця голови ППО)"
+    ],
     "link_news": "https://www.facebook.com/groups/khersonskaprofspilka.np/",
     "link": "/ppo/kherson-ppo"
   },

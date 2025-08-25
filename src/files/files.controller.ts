@@ -1,4 +1,15 @@
-import { Controller, Post, UseInterceptors, UploadedFile, Delete, Param, HttpException, HttpStatus, Get, Res } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  UseInterceptors,
+  UploadedFile,
+  Delete,
+  Param,
+  HttpException,
+  HttpStatus,
+  Get,
+  Res,
+} from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { FilesService } from './files.service';
@@ -10,10 +21,9 @@ import { Response } from 'express';
 // http://localhost:5000/api/files/1.pdf
 // Женя по таким путям відает файли ))))
 
-
 @Controller('files')
 export class FilesController {
-  constructor(private readonly filesService: FilesService) { }
+  constructor(private readonly filesService: FilesService) {}
   @Post('upload')
   @UseInterceptors(
     FileInterceptor('file', {
@@ -40,7 +50,10 @@ export class FilesController {
       return this.filesService.handleFileUpload(file);
     } catch (error) {
       console.error('Помилка завантаження файлу:', error.message);
-      throw new HttpException('Не вдалося завантажити файл', HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException(
+        'Не вдалося завантажити файл',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
   @Get(':filename')
@@ -58,5 +71,4 @@ export class FilesController {
   async deleteFile(@Param('filename') filename: string) {
     return this.filesService.deleteFile(filename);
   }
-
 }

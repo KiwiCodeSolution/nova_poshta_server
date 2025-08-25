@@ -42,10 +42,8 @@ export class Gallerey extends Document {
   @Prop({ type: String })
   previewText: string;
 
-
-  images: string[]
+  images: string[];
 }
-
 
 export const GallereySchema = SchemaFactory.createForClass(Gallerey);
 

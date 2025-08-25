@@ -30,4 +30,4 @@ import { UserModule } from 'src/users/users.module';
   providers: [MailerService],
   exports: [MailerService],
 })
-export class MailModule { }
+export class MailModule {}

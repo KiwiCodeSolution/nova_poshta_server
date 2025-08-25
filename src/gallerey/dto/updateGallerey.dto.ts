@@ -29,14 +29,16 @@ export class UpdateGallereyDto {
 
   @IsOptional()
   publishDate?: Date;
-  
+
   @IsOptional()
   @IsString()
   author: string;
-  
+
   @IsOptional()
-  readonly images:[ {
-    filename: String,
-    url: String,
-  }];
+  readonly images: [
+    {
+      filename: String;
+      url: String;
+    },
+  ];
 }

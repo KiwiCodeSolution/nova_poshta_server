@@ -42,10 +42,8 @@ export class News extends Document {
   @Prop({ type: String })
   previewText: string;
 
-
-  images: string[]
+  images: string[];
 }
-
 
 export const NewsSchema = SchemaFactory.createForClass(News);
 

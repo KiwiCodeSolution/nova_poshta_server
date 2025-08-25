@@ -4,46 +4,46 @@ import { Document } from 'mongoose';
 @Schema()
 export class Ppo extends Document {
   @Prop()
-   region: string;
+  region: string;
 
-  @Prop() 
+  @Prop()
   region_name: string;
 
   @Prop()
-   quantity: number;
+  quantity: number;
 
   @Prop()
-   image: string;
+  image: string;
 
   @Prop()
-   director: string;
+  director: string;
 
   @Prop()
-   position: string;
+  position: string;
 
   @Prop()
-   email: string;
+  email: string;
 
   @Prop()
-   phone: string;
+  phone: string;
 
   @Prop()
-   avatar: string;
+  avatar: string;
 
   @Prop()
-   admission_address: string;
+  admission_address: string;
 
   @Prop()
-   application_address: string;
+  application_address: string;
 
   @Prop([String])
-   committee: string[];
+  committee: string[];
 
-  @Prop() 
+  @Prop()
   link_news: string;
 
   @Prop()
-   link: string;
+  link: string;
 }
 
 export const PpoSchema = SchemaFactory.createForClass(Ppo);

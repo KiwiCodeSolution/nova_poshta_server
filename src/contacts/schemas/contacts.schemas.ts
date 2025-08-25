@@ -3,7 +3,6 @@ import { Document } from 'mongoose';
 
 @Schema()
 export class Contacts extends Document {
-
   @Prop({ unique: true })
   mail: string;
 
@@ -17,7 +16,7 @@ export class Contacts extends Document {
   messenger: string;
 
   @Prop({ unique: true })
- instagram: string;
+  instagram: string;
 
   @Prop({ unique: true })
   youtube: string;

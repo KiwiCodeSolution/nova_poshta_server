@@ -1,45 +1,44 @@
-import { IsEmail, IsNumber, IsString } from "class-validator";
+import { IsEmail, IsNumber, IsString } from 'class-validator';
 
 export class CreatePpoDto {
-    @IsString()
-    readonly region: string;
+  @IsString()
+  readonly region: string;
 
-    @IsString()
-    readonly region_name: string;
-    
-    @IsNumber()
-    readonly quantity: number;
+  @IsString()
+  readonly region_name: string;
 
-    @IsString()
-    readonly image: string;
+  @IsNumber()
+  readonly quantity: number;
 
-    @IsString()
-    readonly director: string;
+  @IsString()
+  readonly image: string;
 
-    @IsString()
-    readonly position: string;
+  @IsString()
+  readonly director: string;
 
-    @IsEmail()
-    readonly email: string;
+  @IsString()
+  readonly position: string;
 
-    @IsString()
-    readonly phone: string;
+  @IsEmail()
+  readonly email: string;
 
-    @IsString()
-    readonly avatar: string;
+  @IsString()
+  readonly phone: string;
 
-    @IsString()
-    readonly admission_address: string;
+  @IsString()
+  readonly avatar: string;
 
-    @IsString()
-    readonly application_address: string;
+  @IsString()
+  readonly admission_address: string;
 
+  @IsString()
+  readonly application_address: string;
 
-    readonly committee: string[];
+  readonly committee: string[];
 
-    @IsString()
-    readonly link_news: string;
+  @IsString()
+  readonly link_news: string;
 
-    @IsString()
-    readonly link: string;
+  @IsString()
+  readonly link: string;
 }

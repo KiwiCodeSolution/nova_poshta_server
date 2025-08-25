@@ -9,7 +9,7 @@ export class MailerController {
   constructor(
     private readonly mailerService: MailerService,
     private readonly configService: ConfigService,
-  ) { }
+  ) {}
 
   @Post('send')
   async sendEmail(@Body() dto: MailerDto) {
@@ -19,9 +19,9 @@ export class MailerController {
 
   @Post('membership-request')
   async sendMembershipRequest(@Body() dto: MembershipRequestDto) {
-    const {  phone, region } = dto;
+    const { phone, region } = dto;
 
-    const subject ='З сайту отримано нову заявку на вступ';
+    const subject = 'З сайту отримано нову заявку на вступ';
     const text = `Имя: ${region}\nТелефон: ${phone}`;
     const html = `
       <p>Регіон: ${region}</p>
