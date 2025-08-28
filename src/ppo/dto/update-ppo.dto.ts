@@ -51,6 +51,25 @@ export class UpdatePpoDto extends PartialType(CreatePpoDto) {
 
   @IsOptional()
   @IsArray()
+  @IsString({ each: true })
+  @Transform(({ value }) => {
+    if (!value) {
+      return [];
+    }
+
+    if (Array.isArray(value)) {
+      return value.filter((el) => typeof el === 'string' && el.trim() !== '');
+    }
+
+    if (typeof value === 'string') {
+      return value
+        .split(',')
+        .map((el) => el.trim())
+        .filter(Boolean);
+    }
+
+    return [];
+  })
   committee?: string[];
 
   @IsOptional()
