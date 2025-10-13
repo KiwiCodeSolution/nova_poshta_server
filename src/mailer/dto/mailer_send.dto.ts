@@ -1,8 +1,9 @@
-import { IsString } from 'class-validator';
+import { IsOptional, IsString } from 'class-validator';
 
 export class MailerDto {
   @IsString()
-  to: string;
+  @IsOptional()
+  to?: string;
 
   @IsString()
   subject: string;
