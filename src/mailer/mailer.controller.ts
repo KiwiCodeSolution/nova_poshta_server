@@ -14,7 +14,12 @@ export class MailerController {
   @Post('send')
   async sendEmail(@Body() dto: MailerDto) {
     const { to, subject, text, html } = dto;
-    return this.mailerService.sendMail(to, subject, text, html);
+    return this.mailerService.sendMail(
+      to || 'help@profspilka.org',
+      subject,
+      text,
+      html,
+    );
   }
 
   @Post('membership-request')
