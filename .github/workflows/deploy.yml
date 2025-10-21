@@ -81,13 +81,24 @@ jobs:
         run: |
           ssh -p 52201 ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
             cd ${{ secrets.DEPLOY_PATH }} &&
-            echo 'Крок 1: Тимчасово переміщуємо файли, які потрібно зберегти' &&
-            mkdir -p .tmp_deploy &&
-            mv .env .tmp_deploy/ || true &&
-            mv uploads .tmp_deploy/ || true &&
-            mv doc .tmp_deploy/ || true &&
+            echo 'Крок 1: Зберігаємо файли у тимчасове сховище' &&
+            # Створюємо одну папку на рівень вище для всіх файлів
+            mkdir -p ../deploy_backup &&
+            # Переміщуємо все, що потрібно зберегти
+            mv .env ../deploy_backup/ || true &&
+            mv doc ../deploy_backup/ || true &&
+            mv images ../deploy_backup/ || true &&
+            mv uploads ../deploy_backup/ || true &&
+            mv uploads2 ../deploy_backup/ || true &&
+            mv uploads3 ../deploy_backup/ || true &&
+            mv uploads4 ../deploy_backup/ || true &&
+            mv uploads_gallerey ../deploy_backup/ || true &&
+            mv uploads_gallerey2 ../deploy_backup/ || true &&
+            mv uploadsold ../deploy_backup/ || true &&
+            mv uploadspewold ../deploy_backup/ || true &&
 
             echo 'Крок 2: Оновлення коду з репозиторію' &&
+            # (РЕКОМЕНДАЦІЯ: Налаштуйте HTTPS+токен і видаліть 'eval' та 'ssh-add')
             eval \$(ssh-agent -s) &&
             ssh-add ~/.ssh/yevbober_rsa &&
             git fetch origin pod_test &&
@@ -95,11 +106,20 @@ jobs:
             git reset --hard origin/pod_test &&
 
             echo 'Крок 3: Повертаємо збережені файли' &&
-            rm -rf ./uploads ./doc ./.env &&
-            mv .tmp_deploy/.env . || true &&
-            mv .tmp_deploy/uploads . || true &&
-            mv .tmp_deploy/doc . || true &&
-            rm -rf .tmp_deploy &&
+            # Повертаємо все з тимчасового сховища
+            mv ../deploy_backup/.env . || true &&
+            mv ../deploy_backup/doc . || true &&
+            mv ../deploy_backup/images . || true &&
+            mv ../deploy_backup/uploads . || true &&
+            mv ../deploy_backup/uploads2 . || true &&
+            mv ../deploy_backup/uploads3 . || true &&
+            mv ../deploy_backup/uploads4 . || true &&
+            mv ../deploy_backup/uploads_gallerey . || true &&
+            mv ../deploy_backup/uploads_gallerey2 . || true &&
+            mv ../deploy_backup/uploadsold . || true &&
+            mv ../deploy_backup/uploadspewold . || true &&
+            # Видаляємо тимчасове сховище
+            rm -rf ../deploy_backup &&
 
             echo 'Крок 4: Встановлення залежностей, білд та перезапуск' &&
             npm install &&
