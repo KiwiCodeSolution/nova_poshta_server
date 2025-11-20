@@ -125,14 +125,15 @@ export class SubscriptionService {
     }
   }
 
-  async unsubscribe(email: string): Promise<Subscription> {
+  async unsubscribe(email: string): Promise<{ message: string }> {
     const subscription = await this.subscriptionModel.findOne({ email });
 
     if (!subscription) {
       throw new HttpException('Підписника не знайдено', HttpStatus.NOT_FOUND);
     }
 
-    subscription.subscribed = false;
-    return subscription.save();
+    await this.subscriptionModel.deleteOne({ email });
+
+    return { message: 'Підписку успішно скасовано та запис видалено' };
   }
 }
