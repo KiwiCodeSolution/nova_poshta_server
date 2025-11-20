@@ -1,17 +1,17 @@
 import {
-  Controller,
-  Post,
   Body,
+  Controller,
   Get,
-  Query,
   HttpCode,
   HttpStatus,
+  Post,
   Put,
+  Query,
 } from '@nestjs/common';
-import { SubscriptionService } from './subscriptions.service';
 import { CreateSubscriptionDto } from './dto/create_subscription.dto';
 import { LogSubscriptionDto } from './dto/log_subscription.dto';
 import { UpdateSubscriptDto } from './dto/update_subscript.dto';
+import { SubscriptionService } from './subscriptions.service';
 
 @Controller('subscription')
 export class SubscriptionController {
@@ -31,6 +31,11 @@ export class SubscriptionController {
   async confirm(@Body() body: { email: string }) {
     const { email } = body;
     return this.subscriptionService.confirmSubscription(email);
+  }
+
+  @Get('unsubscribe')
+  async unsubscribe(@Query('email') email: string) {
+    return this.subscriptionService.unsubscribe(email);
   }
 
   @HttpCode(HttpStatus.OK)
