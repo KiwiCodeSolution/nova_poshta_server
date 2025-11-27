@@ -85,7 +85,7 @@ jobs:
             ln -sfn /root/nova_poshta_data/.env .env &&
             
             # Підключаємо папки з картинками та документами
-            rm -rf uploads uploads2 uploads3 uploads4 images doc uploads_gallerey uploads_gallerey2 uploadsold uploadspewold &&
+            rm -rf uploads uploads2 uploads3 uploads4 images doc uploads_gallerey uploads_gallerey2 uploadsold uploadspewold preview &&
             ln -sfn /root/nova_poshta_data/uploads uploads &&
             ln -sfn /root/nova_poshta_data/uploads2 uploads2 &&
             ln -sfn /root/nova_poshta_data/uploads3 uploads3 &&
@@ -96,6 +96,7 @@ jobs:
             ln -sfn /root/nova_poshta_data/uploads_gallerey2 uploads_gallerey2 &&
             ln -sfn /root/nova_poshta_data/uploadsold uploadsold &&
             ln -sfn /root/nova_poshta_data/uploadspewold uploadspewold &&
+            ln -sfn /root/nova_poshta_data/preview preview &&
 
             echo 'Крок 3: Встановлення залежностей, білд та перезапуск' &&
             npm install &&
