@@ -81,23 +81,8 @@ jobs:
         run: |
           ssh -p 52201 ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
             cd ${{ secrets.DEPLOY_PATH }} &&
-            echo 'Крок 1: Зберігаємо файли у тимчасове сховище' &&
-            # Створюємо одну папку на рівень вище для всіх файлів
-            mkdir -p ../deploy_backup &&
-            # Переміщуємо все, що потрібно зберегти
-            mv .env ../deploy_backup/ || true &&
-            mv doc ../deploy_backup/ || true &&
-            mv images ../deploy_backup/ || true &&
-            mv uploads ../deploy_backup/ || true &&
-            mv uploads2 ../deploy_backup/ || true &&
-            mv uploads3 ../deploy_backup/ || true &&
-            mv uploads4 ../deploy_backup/ || true &&
-            mv uploads_gallerey ../deploy_backup/ || true &&
-            mv uploads_gallerey2 ../deploy_backup/ || true &&
-            mv uploadsold ../deploy_backup/ || true &&
-            mv uploadspewold ../deploy_backup/ || true &&
-
-            echo 'Крок 2: Оновлення коду з репозиторію' &&
+           
+            echo 'Крок 1: Оновлення коду з репозиторію' &&
             # (РЕКОМЕНДАЦІЯ: Налаштуйте HTTPS+токен і видаліть 'eval' та 'ssh-add')
             eval \$(ssh-agent -s) &&
             ssh-add ~/.ssh/yevbober_rsa &&
@@ -105,23 +90,137 @@ jobs:
             git checkout backend &&
             git reset --hard origin/pod_test &&
 
-            echo 'Крок 3: Повертаємо збережені файли' &&
-            # Повертаємо все з тимчасового сховища
-            mv ../deploy_backup/.env . || true &&
-            mv ../deploy_backup/doc . || true &&
-            mv ../deploy_backup/images . || true &&
-            mv ../deploy_backup/uploads . || true &&
-            mv ../deploy_backup/uploads2 . || true &&
-            mv ../deploy_backup/uploads3 . || true &&
-            mv ../deploy_backup/uploads4 . || true &&
-            mv ../deploy_backup/uploads_gallerey . || true &&
-            mv ../deploy_backup/uploads_gallerey2 . || true &&
-            mv ../deploy_backup/uploadsold . || true &&
-            mv ../deploy_backup/uploadspewold . || true &&
-            # Видаляємо тимчасове сховище
-            rm -rf ../deploy_backup &&
+            Ось повний, виправлений та безпечний варіант пайплайну.
 
-            echo 'Крок 4: Встановлення залежностей, білд та перезапуск' &&
+Щоб це запрацювало і файли більше ніколи не зникали, ми переходимо на стратегію Symlinks (Символічних посилань). Це означає, що ваші картинки фізично лежатимуть в окремій папці на сервері, а сайт просто "посилатиметься" на них.
+
+⚠️ ВАЖЛИВО: Підготовка сервера (Зробити 1 раз руками)
+Перед тим як пушити новий YAML файл, зайдіть на сервер через термінал і виконайте ці команди. Це перенесе ваші файли у безпечне місце:
+
+Bash
+
+# 1. Створюємо "сейф" для даних
+mkdir -p /root/nova_poshta_data
+
+# 2. Переміщуємо туди всі існуючі папки (якщо папка вже порожня/не існує, команда видасть помилку - це ок, ігноруйте)
+mv /prod/nova_poshta_server/uploads /root/nova_poshta_data/
+mv /prod/nova_poshta_server/uploads2 /root/nova_poshta_data/
+mv /prod/nova_poshta_server/uploads3 /root/nova_poshta_data/
+mv /prod/nova_poshta_server/uploads4 /root/nova_poshta_data/
+mv /prod/nova_poshta_server/images /root/nova_poshta_data/
+mv /prod/nova_poshta_server/doc /root/nova_poshta_data/
+mv /prod/nova_poshta_server/uploads_gallerey /root/nova_poshta_data/
+mv /prod/nova_poshta_server/uploads_gallerey2 /root/nova_poshta_data/
+mv /prod/nova_poshta_server/uploadsold /root/nova_poshta_data/
+mv /prod/nova_poshta_server/uploadspewold /root/nova_poshta_data/
+
+# 3. Переміщуємо .env файл (конфігурацію теж краще тримати окремо)
+mv /prod/nova_poshta_server/.env /root/nova_poshta_data/
+Оновлений файл deploy.yml
+Скопіюйте цей код повністю. Він більше не переміщує файли, а лише створює зв'язки.
+
+YAML
+
+name: Deploy Backend to Server
+
+on:
+  push:
+    branches:
+      - pod_test
+
+jobs:
+  # ----------------- ЕТАП 1: ТЕСТУВАННЯ -----------------
+  test:
+    name: 1. Run Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci # npm ci швидше і надійніше для CI/CD ніж install
+
+      - name: Run tests
+        run: echo "Run tests placeholder" 
+
+  # ----------------- ЕТАП 2: ВАЛІДАЦІЙНА ЗБІРКА -----------------
+  build:
+    name: 2. Build Project
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+  # ----------------- ЕТАП 3: РОЗГОРТАННЯ (БЕЗПЕЧНЕ) -----------------
+  deploy:
+    name: 3. Deploy to Server
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Setup SSH Agent
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Create SSH config
+        run: |
+          mkdir -p ~/.ssh/
+          chmod 700 ~/.ssh/
+          echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+
+      - name: Connect and Deploy
+        run: |
+          ssh -p 52201 ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
+            cd ${{ secrets.DEPLOY_PATH }} &&
+
+            echo '🔹 Крок 1: Оновлення коду' &&
+            # (Git commands preserved as per your setup)
+            eval \$(ssh-agent -s) &&
+            ssh-add ~/.ssh/yevbober_rsa &&
+            git fetch origin pod_test &&
+            git checkout backend &&
+            git reset --hard origin/pod_test &&
+
+            echo '🔹 Крок 2: Створення посилань на дані (Symlinks)' &&
+            # Ця команда видаляє порожні папки, якщо Git їх створив, і замінює на посилання
+            # Прапор -sfn: s=symlink, f=force (перезаписати), n=no-dereference (не лізти всередину)
+            
+            # Підключаємо .env файл
+            ln -sfn /root/nova_poshta_data/.env .env &&
+            
+            # Підключаємо папки з картинками та документами
+            rm -rf uploads uploads2 uploads3 uploads4 images doc uploads_gallerey uploads_gallerey2 uploadsold uploadspewold &&
+            ln -sfn /root/nova_poshta_data/uploads uploads &&
+            ln -sfn /root/nova_poshta_data/uploads2 uploads2 &&
+            ln -sfn /root/nova_poshta_data/uploads3 uploads3 &&
+            ln -sfn /root/nova_poshta_data/uploads4 uploads4 &&
+            ln -sfn /root/nova_poshta_data/images images &&
+            ln -sfn /root/nova_poshta_data/doc doc &&
+            ln -sfn /root/nova_poshta_data/uploads_gallerey uploads_gallerey &&
+            ln -sfn /root/nova_poshta_data/uploads_gallerey2 uploads_gallerey2 &&
+            ln -sfn /root/nova_poshta_data/uploadsold uploadsold &&
+            ln -sfn /root/nova_poshta_data/uploadspewold uploadspewold &&
+
+            echo 'Крок 3: Встановлення залежностей, білд та перезапуск' &&
             npm install &&
             npm run build &&
             pm2 restart nova-poshta-backend &&
