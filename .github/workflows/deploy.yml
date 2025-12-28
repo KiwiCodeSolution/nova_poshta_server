@@ -82,22 +82,21 @@ jobs:
             # Прапор -sfn: s=symlink, f=force (перезаписати), n=no-dereference (не лізти всередину)
             
             # Підключаємо .env файл
-            ln -sfn /root/nova_poshta_data/.env .env &&
+            ln -sfn /prod/nova_poshta_data/.env .env &&
             
-            # Підключаємо папки з картинками та документами
+            # Підключаємо папки
             rm -rf uploads uploads2 uploads3 uploads4 images doc uploads_gallerey uploads_gallerey2 uploadsold uploadspewold preview &&
-            ln -sfn /root/nova_poshta_data/uploads uploads &&
-            ln -sfn /root/nova_poshta_data/uploads2 uploads2 &&
-            ln -sfn /root/nova_poshta_data/uploads3 uploads3 &&
-            ln -sfn /root/nova_poshta_data/uploads4 uploads4 &&
-            ln -sfn /root/nova_poshta_data/images images &&
-            ln -sfn /root/nova_poshta_data/doc doc &&
-            ln -sfn /root/nova_poshta_data/uploads_gallerey uploads_gallerey &&
-            ln -sfn /root/nova_poshta_data/uploads_gallerey2 uploads_gallerey2 &&
-            ln -sfn /root/nova_poshta_data/uploadsold uploadsold &&
-            ln -sfn /root/nova_poshta_data/uploadspewold uploadspewold &&
-            ln -sfn /root/nova_poshta_data/preview preview &&
-
+            ln -sfn /prod/nova_poshta_data/uploads uploads &&
+            ln -sfn /prod/nova_poshta_data/uploads2 uploads2 &&
+            ln -sfn /prod/nova_poshta_data/uploads3 uploads3 &&
+            ln -sfn /prod/nova_poshta_data/uploads4 uploads4 &&
+            ln -sfn /prod/nova_poshta_data/images images &&
+            ln -sfn /prod/nova_poshta_data/doc doc &&
+            ln -sfn /prod/nova_poshta_data/uploads_gallerey uploads_gallerey &&
+            ln -sfn /prod/nova_poshta_data/uploads_gallerey2 uploads_gallerey2 &&
+            ln -sfn /prod/nova_poshta_data/uploadsold uploadsold &&
+            ln -sfn /prod/nova_poshta_data/uploadspewold uploadspewold &&
+            ln -sfn /prod/nova_poshta_data/preview preview &&
             echo 'Крок 3: Встановлення залежностей, білд та перезапуск' &&
             npm install &&
             npm run build &&
