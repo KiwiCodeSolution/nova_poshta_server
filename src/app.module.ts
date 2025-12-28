@@ -18,11 +18,12 @@ import { PpoModule } from './ppo/ppo.module';
 import { PpoService } from './ppo/ppo.service';
 import { SubscriptionsModule } from './subscriptions/subscriptions.module';
 import { UserModule } from './users/users.module';
+import { DefendersModule } from './defenders/defenders.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      isGlobal: true, 
+      isGlobal: true,
     }),
 
     MongooseModule.forRootAsync({
@@ -64,6 +65,7 @@ import { UserModule } from './users/users.module';
       rootPath: join(__dirname, '..', 'images', 'ppo'),
       serveRoot: '/images/ppo',
     }),
+    DefendersModule,
   ],
   controllers: [MailerController, FilesController, PpoController],
 
