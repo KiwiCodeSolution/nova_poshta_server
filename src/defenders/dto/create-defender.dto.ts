@@ -6,6 +6,8 @@ export class CreateDefenderDto {
   @IsString() titleEn: string;
   @IsString() descriptionUk: string;
   @IsString() descriptionEn: string;
+  @IsString() goalUk: string;
+  @IsString() goalEn: string;
   @IsUrl() link: string;
   @Transform(({ value }) => value === 'true' || value === true)
   @IsBoolean()

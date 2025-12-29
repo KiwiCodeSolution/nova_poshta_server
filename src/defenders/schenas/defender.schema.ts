@@ -16,6 +16,12 @@ export class Defender extends Document {
   descriptionEn: string;
 
   @Prop({ required: true })
+  goalUk: string;
+
+  @Prop({ required: true })
+  goalEn: string;
+
+  @Prop({ required: true })
   image: string;
 
   @Prop({ required: true })
