@@ -158,10 +158,10 @@ export class NewsService {
 
   private async sendNewsToSubscribers(news: News): Promise<void> {
     const subscribers = await this.subscriptionModel.find({ subscribed: true });
-    const newsLink = `${this.configService.frontendBaseUrl}/uk/novyny/${news.slug}`;
+    const newsLink = `https://profspilka.org/uk/novyny/${news.slug}`;
 
     const emailPromises = subscribers.map((subscriber) => {
-      const unsubscribeLink = `${this.configService.frontendBaseUrl}/uk/subscription/unsubscribe?email=${subscriber.email}`;
+      const unsubscribeLink = `https://profspilka.org/uk/subscription/unsubscribe?email=${subscriber.email}`;
 
       return this.mailerService.sendMail(
         subscriber.email,
