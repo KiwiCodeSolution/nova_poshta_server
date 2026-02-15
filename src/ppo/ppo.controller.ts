@@ -37,7 +37,6 @@ export class PpoController {
 
   @Get('link/:slug')
   async findOneByLink(@Param('slug') slug: string) {
-    // додаємо /ppo/ до slug, бо у полі link так зберігається
     const link = `/ppo/${slug}`;
     return this.ppoService.findOneByLink(link);
   }
@@ -52,16 +51,16 @@ export class PpoController {
       {
         storage: diskStorage({
           destination: './images/ppo',
-          filename: (req, file, callback) => {
-            const { link } = req.params;
-            const extension = path.parse(file.originalname).ext;
+          filename: (req, file, cb) => {
+            const rawLink = req.params.link;
+            const safeLink = rawLink.replace(/[\/\\]/g, '-');
+            const ext = path.extname(file.originalname);
+            const unique = Date.now();
 
             if (file.fieldname === 'avatar') {
-              callback(null, `${link}-avatar${extension}`);
-            } else if (file.fieldname === 'image') {
-              callback(null, `${link}${extension}`);
+              cb(null, `${safeLink}-avatar-${unique}${ext}`);
             } else {
-              callback(null, file.originalname);
+              cb(null, `${safeLink}-${unique}${ext}`);
             }
           },
         }),
@@ -72,22 +71,14 @@ export class PpoController {
     @Param('id') id: string,
     @UploadedFiles()
     files: { avatar?: Express.Multer.File[]; image?: Express.Multer.File[] },
-    @Body() updatePpoDto: UpdatePpoDto,
+    @Body() dto: UpdatePpoDto,
   ) {
-    const avatarFile = files.avatar ? files.avatar[0] : null;
-    const imageFile = files.image ? files.image[0] : null;
-
-    const updateData: Record<string, any> = { ...updatePpoDto };
-
-    if (avatarFile) {
-      updateData.avatar = `/images/ppo/${avatarFile.filename}`;
-    }
-
-    if (imageFile) {
-      updateData.image = `/images/ppo/${imageFile.filename}`;
-    }
-
-    return this.ppoService.update(id, updateData);
+    return this.ppoService.updateWithFiles(
+      id,
+      dto,
+      files.image?.[0],
+      files.avatar?.[0],
+    );
   }
 
   @Delete(':id')

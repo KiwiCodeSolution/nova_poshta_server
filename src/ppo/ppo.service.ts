@@ -5,6 +5,9 @@ import { CreatePpoDto } from './dto/create-ppo.dto';
 import { UpdatePpoDto } from './dto/update-ppo.dto';
 import { Ppo } from './schemas/ppo.schema';
 
+import * as fs from 'fs';
+import * as path from 'path';
+
 @Injectable()
 export class PpoService {
   constructor(@InjectModel(Ppo.name) private ppoModel: Model<Ppo>) {}
@@ -56,33 +59,45 @@ export class PpoService {
 
   async updateWithFiles(
     id: string,
-    updatePpoData: Record<string, any>, // <--- Змінено тут
+    updatePpoData: Record<string, any>,
     imageFile?: Express.Multer.File,
     avatarFile?: Express.Multer.File,
   ): Promise<Ppo> {
-    // 1. Створюємо об'єкт для оновлення.
-    const updateData: Record<string, any> = { ...updatePpoData };
+    const existing = await this.ppoModel.findById(id);
 
-    // 2. Додаємо шляхи до файлів, якщо вони присутні.
+    if (!existing) {
+      throw new NotFoundException(`ППО з ID ${id} не знайдено`);
+    }
+
+    const updateData = { ...updatePpoData };
+
+    // -------- IMAGE --------
     if (imageFile) {
+      this.deleteIfExists(existing.image);
       updateData.image = `/images/ppo/${imageFile.filename}`;
     }
 
+    // -------- AVATAR --------
     if (avatarFile) {
+      this.deleteIfExists(existing.avatar);
       updateData.avatar = `/images/ppo/${avatarFile.filename}`;
     }
 
-    // 3. Виконуємо оновлення.
-    const updatedPpo = await this.ppoModel
-      .findByIdAndUpdate(id, updateData, {
-        new: true,
-        runValidators: true,
-      })
-      .exec();
+    const updated = await this.ppoModel.findByIdAndUpdate(id, updateData, {
+      new: true,
+      runValidators: true,
+    });
 
-    if (!updatedPpo) {
-      throw new NotFoundException(`ППО з ID ${id} не знайдено`);
+    return updated;
+  }
+
+  private deleteIfExists(filePath?: string) {
+    if (!filePath) return;
+
+    const fullPath = path.join(process.cwd(), filePath);
+
+    if (fs.existsSync(fullPath)) {
+      fs.unlinkSync(fullPath);
     }
-    return updatedPpo;
   }
 }
