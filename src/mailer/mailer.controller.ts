@@ -3,6 +3,7 @@ import { MailerService } from './mailer.service';
 import { MailerDto } from './dto/mailer_send.dto';
 import { MembershipRequestDto } from './dto/Membersmembership_request.dto';
 import { ConfigService } from '@nestjs/config';
+import { ContactFormDto } from './dto/contact_form.dto';
 
 @Controller('email')
 export class MailerController {
@@ -41,5 +42,22 @@ export class MailerController {
       text,
       html,
     );
+  }
+
+  @Post('contact')
+  async sendContactForm(@Body() dto: ContactFormDto) {
+    const { name, email, message } = dto;
+
+    const subject = `Нове повідомлення з форми зворотного зв'язку від ${name}`;
+    const text = `Ім'я: ${name}\nEmail: ${email}\nПовідомлення: ${message}`;
+    const html = `
+    <h3>Нове повідомлення з форми зворотного зв'язку</h3>
+    <p><strong>Ім'я:</strong> ${name}</p>
+    <p><strong>Email:</strong> ${email}</p>
+    <p><strong>Повідомлення:</strong> ${message}</p>
+  `;
+
+    const recipient = this.configService.get<string>('MEMBERSHIP_EMAILS');
+    return this.mailerService.sendMail(recipient, subject, text, html);
   }
 }
