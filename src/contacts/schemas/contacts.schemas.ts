@@ -23,6 +23,12 @@ export class Contacts extends Document {
 
   @Prop({ unique: true })
   facebook: string;
+
+  @Prop({ unique: true })
+  telegrambot: string;
+
+  @Prop({ unique: true })
+  viberbot: string;
 }
 
 export const ContactsSchema = SchemaFactory.createForClass(Contacts);
