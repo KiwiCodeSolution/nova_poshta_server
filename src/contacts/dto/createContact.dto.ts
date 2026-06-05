@@ -28,6 +28,14 @@ export class ContactDto {
   @IsOptional()
   @IsString()
   facebook?: string;
+
+  @IsOptional()
+  @IsString()
+  telegrambot?: string;
+
+  @IsOptional()
+  @IsString()
+  viberbot?: string;
 }
 
 export class CreateContactDto extends ContactDto {}
