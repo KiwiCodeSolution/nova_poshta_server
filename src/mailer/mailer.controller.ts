@@ -46,7 +46,12 @@ export class MailerController {
 
   @Post('contact')
   async sendContactForm(@Body() dto: ContactFormDto) {
-    const { name, email, message } = dto;
+    const { name, email, message, website } = dto;
+
+    // honeypot заповнений - це бот, робимо вигляд що все ок і нічого не шлемо
+    if (website) {
+      return;
+    }
 
     const subject = `Нове повідомлення з форми зворотного зв'язку від ${name}`;
     const text = `Ім'я: ${name}\nEmail: ${email}\nПовідомлення: ${message}`;

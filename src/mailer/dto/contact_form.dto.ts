@@ -1,4 +1,4 @@
-import { IsEmail, IsString, MinLength } from 'class-validator';
+import { IsEmail, IsOptional, IsString, MinLength } from 'class-validator';
 
 export class ContactFormDto {
   @IsString()
@@ -11,4 +11,9 @@ export class ContactFormDto {
   @IsString()
   @MinLength(10)
   message: string;
+
+  // honeypot: приховане поле, яке заповнюють лише боти
+  @IsOptional()
+  @IsString()
+  website?: string;
 }
