@@ -1,0 +1,10 @@
+PUT http://localhost:5000/api/ppo/673249021286ab586a620ea0 HTTP/1.1
+Content-Type: application/json
+
+{
+  "region": "курская народная республика",
+  "quantity": 200,
+  "email": "new2_email@example.com"
+}
+
+

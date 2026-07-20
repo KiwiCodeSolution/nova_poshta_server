@@ -1,0 +1,18 @@
+POST http://localhost:5000/api/ppo HTTP/1.1
+Content-Type: application/json
+
+{
+  "region": "Example Region",
+  "region_name": "Example Region Name",
+  "quantity": 100,
+  "image": "example_image_url",
+  "director": "John Doe",
+  "position": "Director",
+  "email": "director@example.com",
+  "phone": "+123456789",
+  "avatar": "example_avatar_url",
+  "admission_address": "123 Example St",
+  "application_address": "456 Example Ave",
+  "link_news": "example_news_url",
+  "link": "example_link_url"
+}

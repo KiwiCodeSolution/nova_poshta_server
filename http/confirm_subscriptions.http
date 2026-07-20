@@ -1,0 +1,6 @@
+POST http://localhost:5000/api/subscription/confirm HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "taar12sh@gmail.com"
+}

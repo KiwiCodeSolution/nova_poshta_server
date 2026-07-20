@@ -1,0 +1,2 @@
+ GET http://localhost:5000/api/news HTTP/1.1
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjcxMjE5Mjg3NGI4NGJiMTFmYjk2ZjUiLCJpYXQiOjE3MTg2OTA3MzR9.-yRqmyV3ugU2y-epV1Wq9lY9PR45ikENDG9HtOQOjwE

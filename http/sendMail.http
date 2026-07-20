@@ -1,0 +1,9 @@
+POST http://localhost:5000/api/email/send HTTP/1.1
+Content-Type: application/json
+
+{
+   "to" : "taar12sh@gmail.com",
+   "subject": "Hello from Node.js",
+   "text":"This is a test email using NodeMailer!",
+   "html": "<b>This is a test email using NodeMailer! nest JS scuko</b>"
+}

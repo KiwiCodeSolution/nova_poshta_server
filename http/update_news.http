@@ -1,0 +1,15 @@
+PUT http://localhost:5000/api/news/news-25-september-qwerty
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjcxNGE1MTcyYTI3NTFmZGYyZDIyMGMiLCJpYXQiOjE3MTg3MDA2NDF9.CG7gKpj8_pJc61W9hGqBcvf9HrdJYsTiaf__hFEP2x8
+Content-Type: application/json
+
+{
+    "title": "chtoto novoe",
+    "sections": ["Jane Smidddddddffffffffth"],
+    "metaTags": ["vashe" , "ptnpnh"],
+    "content": "dfghjkloiuyuytrewfffffffffffffq",
+    "status": "created"   
+}
+
+
+
+# status?: 'published' | 'created' | 'archived';

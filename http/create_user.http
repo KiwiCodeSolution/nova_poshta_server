@@ -1,0 +1,10 @@
+POST http://localhost:5000/bc/user HTTP/1.1
+Content-Type: application/json
+
+{
+   "email" : "test@gmai.com",
+   "username": "poduzova",
+   "phone":"9379992",
+   "password": "123456"
+}
+

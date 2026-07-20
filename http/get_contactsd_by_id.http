@@ -1,0 +1,2 @@
+GET http://localhost:5000/api/contacts/6732396817fee9ec37f30171 HTTP/1.1
+Content-Type: application/json
